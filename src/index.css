@@ -5,3 +5,43 @@
   --font-cormorant: "Cormorant Garamond", serif;
   --font-montserrat: "Montserrat", sans-serif;
 }
+
+@keyframes bgFadeOne {
+  0%,
+  40% {
+    opacity: 1;
+  }
+
+  50%,
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bgFadeTwo {
+  0%,
+  40% {
+    opacity: 0;
+  }
+
+  50%,
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-bgFadeOne {
+  animation: bgFadeOne 10s infinite ease-in-out;
+}
+
+.animate-bgFadeTwo {
+  animation: bgFadeTwo 10s infinite ease-in-out;
+}
