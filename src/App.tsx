@@ -3,54 +3,39 @@ import Hero from "./components/Hero";
 import LatestCollections from "./components/Latest_Collections";
 import LuxuryBanners from "./components/Banners";
 import Categories from "./components/Categories";
+import Reviews from "./components/Reviews";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
     <div className="bg-[#0a0a0a]">
-
-      {/* Navbar */}
       <div className="sticky top-0 z-50">
         <Navbar />
       </div>
 
-      {/* Hero */}
       <div className="sticky top-0 h-screen z-10">
         <Hero />
       </div>
 
-      {/* Latest Collections */}
       <div className="relative z-20">
         <LatestCollections />
       </div>
 
-      {/* Luxury Banners */}
       <div className="relative z-20">
         <LuxuryBanners />
       </div>
 
-      {/* Categories */}
       <div className="relative z-20">
         <Categories />
       </div>
 
-      {/* Footer */}
-      <footer
-        className="relative z-20 border-t border-white/[0.08] py-4 px-12 flex justify-center gap-4 bg-[#0a0a0a]"
-        style={{
-          fontFamily: "Montserrat, sans-serif",
-          fontSize: "8px",
-          letterSpacing: "0.24em",
-          fontWeight: 300,
-          color: "rgba(176,170,163,0.35)",
-          textTransform: "uppercase",
-        }}
-      >
-        <span>Something in you recognizes it</span>
-        <span style={{ opacity: 0.3 }}>/</span>
-        <span>Aubrenne</span>
-        <span style={{ opacity: 0.3 }}>/</span>
-        <span>2026</span>
-      </footer>
+      <div className="relative z-20">
+        <Reviews />
+      </div>
+
+      <div className="relative z-20">
+        <Footer />
+      </div>
     </div>
   );
 }
