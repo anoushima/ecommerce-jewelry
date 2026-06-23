@@ -1,5 +1,4 @@
-import bracelet1 from "../assets/bracelet1.png";
-import bracelet2 from "../assets/bracelet2.png";
+
 
 export default function Hero() {
   return (
@@ -8,7 +7,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 animate-bgFadeOne"
         style={{
-          backgroundImage: `url(${bracelet1})`,
+          backgroundImage: `url(${"https://res.cloudinary.com/dnnk7dymx/image/upload/v1782204367/bracelet1_htciiu.png"})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "70% center",
@@ -19,7 +18,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 animate-bgFadeTwo"
         style={{
-          backgroundImage: `url(${bracelet2})`,
+          backgroundImage: `url(${"https://res.cloudinary.com/dnnk7dymx/image/upload/v1782204413/bracelet2_gl0wgz.png"})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "70% center",
