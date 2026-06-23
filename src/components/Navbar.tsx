@@ -178,10 +178,10 @@ export default function Navbar() {
             </div>
 
             {/* Right col — image cards */}
-            <div className="flex-1 py-10 px-10">
-              <div className="grid grid-cols-4 gap-5">
+            <div className="flex-1 py-10 px-10 flex flex-col justify-center">
+              <div className="flex justify-center gap-8">
                 {displayImages.map((img, i) => (
-                  <div key={i} className="group cursor-pointer">
+                  <div key={i} className="group cursor-pointer w-[170px] shrink-0">
                     <div className="overflow-hidden bg-[#141414] aspect-square">
                       <img
                         src={img.src}

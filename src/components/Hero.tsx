@@ -1,5 +1,3 @@
-
-
 export default function Hero() {
   return (
     <section className="relative min-h-[85vh] overflow-hidden bg-[#0b0a09]">
@@ -26,14 +24,14 @@ export default function Hero() {
       />
 
       {/* Luxury Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/25" />
 
       {/* Ambient Glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at 30% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)",
+            "radial-gradient(circle at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%)",
         }}
       />
 
