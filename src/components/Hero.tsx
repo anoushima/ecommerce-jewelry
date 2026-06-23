@@ -1,29 +1,86 @@
+import bracletImg from"../assets/image_b7a6629f.png";
+
 export default function Hero() {
   return (
-    <section className="relative flex-1 flex flex-col items-center justify-center bg-[#0a0a0a] px-12 py-20 overflow-hidden min-h-[560px]">
+    <section className="relative min-h-[85vh] overflow-hidden bg-[#0a0a0a]">
+      {/* Background Image */}
+      <img
+        src={bracletImg}
+        alt="Luxury Bracelet"
+        className="absolute inset-0 h-full w-full object-cover object-right"
+      />
 
-      {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(255,255,255,0.04)_0%,transparent_70%)] pointer-events-none" />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/40" />
 
-      {/* Faint watermark letter */}
-      <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[52%] font-cormorant text-[260px] font-light text-white/[0.04] select-none pointer-events-none leading-none">
+      {/* Ambient Glow */}
+      <div
+        className="absolute left-0 top-0 h-full w-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 25% 50%, rgba(255,255,255,0.05) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* Watermark A */}
+      <span
+        className="absolute left-20 top-1/2 -translate-y-1/2 select-none pointer-events-none leading-none text-white/[0.04]"
+        style={{
+          fontFamily: '"Cormorant Garamond", serif',
+          fontSize: "260px",
+          fontWeight: 300,
+        }}
+      >
         A
       </span>
 
       {/* Content */}
-      <p className="relative font-montserrat text-[8.5px] tracking-[0.35em] font-light text-[#b0aaa3]/55 uppercase mb-5">
-        Maison de Haute Joaillerie
-      </p>
+      <div className="relative z-10 flex min-h-[85vh] items-center px-12 md:px-20">
+        <div>
+          <p
+            className="text-[#b0aaa3] uppercase mb-5"
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "8.5px",
+              letterSpacing: "0.35em",
+              fontWeight: 300,
+              opacity: 0.55,
+            }}
+          >
+            Maison de Haute Joaillerie
+          </p>
 
-      <h1 className="relative font-cormorant text-[72px] font-normal tracking-[0.55em] indent-[0.55em] text-[#e8e2d9] uppercase leading-none">
-        Aubrenne
-      </h1>
+          <h1
+            className="text-[#e8e2d9] uppercase leading-none"
+            style={{
+              fontFamily: '"Cormorant Garamond", serif',
+              fontSize: "72px",
+              fontWeight: 400,
+              letterSpacing: "0.55em",
+              textIndent: "0.55em",
+            }}
+          >
+            Aubrenne
+          </h1>
 
-      <div className="relative w-10 h-[0.5px] bg-[#b0aaa3]/30 my-6" />
+          <div
+            className="w-10 my-6 bg-[#b0aaa3]/30"
+            style={{ height: "0.5px" }}
+          />
 
-      <p className="relative font-cormorant text-lg font-light italic text-[#b0aaa3]/70 tracking-[0.08em]">
-        Worn close. Felt forever.
-      </p>
+          <p
+            className="text-[#b0aaa3]/70 italic"
+            style={{
+              fontFamily: '"Cormorant Garamond", serif',
+              fontSize: "18px",
+              fontWeight: 300,
+              letterSpacing: "0.08em",
+            }}
+          >
+            Worn close. Felt forever.
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
