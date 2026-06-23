@@ -28,7 +28,7 @@ export default function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-[85vh] items-center px-12 md:px-20">
+      <div className="relative z-10 flex min-h-[85vh] items-center px-6 sm:px-12 md:px-20">
         <div>
           <p
             className="mb-5 uppercase text-[#b0aaa3]"
@@ -38,17 +38,15 @@ export default function Hero() {
           </p>
 
           <h1
-            className="uppercase leading-none text-[#e8e2d9]"
-            style={{
-              fontFamily: '"Cormorant Garamond", serif',
-              fontSize: "clamp(38px, 8vw, 72px)",
-              fontWeight: 400,
-              letterSpacing: "0.55em",
-              textIndent: "0.55em",
-            }}
-          >
-            Aubrenne
-          </h1>
+  className="uppercase leading-none text-[#e8e2d9] tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.55em]"
+  style={{
+    fontFamily: '"Cormorant Garamond", serif',
+    fontSize: "clamp(32px, 7vw, 72px)",
+    fontWeight: 400,
+  }}
+>
+  Aubrenne
+</h1>
 
           <div className="my-6 w-10 bg-[#b0aaa3]/30" style={{ height: "0.5px" }} />
 

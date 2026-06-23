@@ -22,31 +22,34 @@ export default function Categories() {
       </div>
 
       {/* Cards grid — responsive: 2 cols mobile, 3 cols tablet, 5 cols desktop */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 md:gap-6 w-full max-w-7xl mx-auto">
-        {CATEGORIES.map((cat) => (
-          <div key={cat.id} className="group cursor-pointer flex flex-col">
-            <div className="w-full overflow-hidden" style={{ aspectRatio: "1 / 1", background: "#111" }}>
-              <img
-                src={cat.image}
-                alt={cat.label}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ filter: "brightness(0.92)" }}
-              />
-            </div>
-            <div className="pt-3 sm:pt-4 pb-1 text-center">
-              <p
-                style={{ fontFamily: "Montserrat, sans-serif", fontSize: "9px", letterSpacing: "0.22em", fontWeight: 400, color: "rgba(176,170,163,0.75)", textTransform: "uppercase", transition: "color 0.2s ease" }}
-                className="group-hover:!text-white"
-              >
-                {cat.label}
-              </p>
-              <div className="flex justify-center mt-2">
-                <div className="h-px bg-white/0 group-hover:bg-white/40 transition-all duration-500" style={{ width: "24px" }} />
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6 w-full max-w-7xl mx-auto">
+  {CATEGORIES.map((cat) => (
+    <div
+      key={cat.id}
+      className="group cursor-pointer flex flex-col w-[calc(50%-8px)] sm:w-[calc(33.333%-14px)] lg:w-[calc(20%-20px)]"
+    >
+      <div className="w-full overflow-hidden" style={{ aspectRatio: "1 / 1", background: "#111" }}>
+        <img
+          src={cat.image}
+          alt={cat.label}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          style={{ filter: "brightness(0.92)" }}
+        />
       </div>
+      <div className="pt-3 sm:pt-4 pb-1 text-center">
+        <p
+          style={{ fontFamily: "Montserrat, sans-serif", fontSize: "9px", letterSpacing: "0.22em", fontWeight: 400, color: "rgba(176,170,163,0.75)", textTransform: "uppercase", transition: "color 0.2s ease" }}
+          className="group-hover:!text-white"
+        >
+          {cat.label}
+        </p>
+        <div className="flex justify-center mt-2">
+          <div className="h-px bg-white/0 group-hover:bg-white/40 transition-all duration-500" style={{ width: "24px" }} />
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
 
       <div className="max-w-7xl mx-auto mt-12 sm:mt-14 md:mt-16" style={{ height: "0.5px", background: "rgba(176,170,163,0.1)" }} />
     </section>
