@@ -4,21 +4,10 @@ import { supabase } from "../lib/supabase";
 
 type Review = { id: string; name: string; review: string; stars: number };
 
-const FALLBACK_REVIEWS: Review[] = [
-  { id: "1", stars: 5, review: "Absolutely breathtaking. The craftsmanship is unlike anything I have experienced before.", name: "Isabelle R." },
-  { id: "2", stars: 5, review: "My engagement ring arrived perfectly. Simple, refined, and of exceptional quality.", name: "Melissa S." },
-  { id: "3", stars: 5, review: "Beautiful and exactly as described. The packaging alone felt like a luxury experience.", name: "Carolyn M." },
-  { id: "4", stars: 5, review: "Exactly as depicted. The ring is stunning and the service was impeccable throughout.", name: "Scott C." },
-  { id: "5", stars: 5, review: "An heirloom-quality piece. I receive compliments every single time I wear it.", name: "Priya N." },
-  { id: "6", stars: 5, review: "The necklace exceeded every expectation. Aubrenne truly understands luxury.", name: "Sophie L." },
-  { id: "7", stars: 5, review: "Gifted a bracelet to my mother and she was moved to tears. Worth every moment.", name: "Ryan K." },
-  { id: "8", stars: 5, review: "The attention to detail is extraordinary. A truly timeless piece of jewellery.", name: "Amara J." },
-];
-
 const VISIBLE = 4;
 
 export default function Reviews() {
-  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [start, setStart] = useState(0);
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
@@ -33,7 +22,7 @@ export default function Reviews() {
       .select("*")
       .order("created_at", { ascending: false })
       .then(({ data }) => {
-        if (data && data.length > 0) setReviews(data);
+        if (data) setReviews(data);
       });
   };
 
@@ -52,7 +41,7 @@ export default function Reviews() {
       setName("");
       setReview("");
       setStars(5);
-      fetchReviews(); // refresh reviews after submit
+      fetchReviews();
       setTimeout(() => {
         setShowForm(false);
         setStatus("idle");
@@ -65,6 +54,8 @@ export default function Reviews() {
   const prev = () => canPrev && setStart((s) => s - 1);
   const next = () => canNext && setStart((s) => s + 1);
   const visible = reviews.slice(start, start + VISIBLE);
+
+  if (reviews.length === 0) return null;
 
   return (
     <section className="relative z-20 w-full bg-[#0a0a0a] py-16 sm:py-20 md:py-24 px-5 sm:px-8 md:px-12 border-t border-white/[0.06]">
@@ -82,7 +73,6 @@ export default function Reviews() {
         </div>
 
         <div className="flex items-center gap-4 mt-2">
-          {/* Write a Review button */}
           <button
             onClick={() => setShowForm(true)}
             style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.6)", background: "none", border: "0.5px solid rgba(176,170,163,0.25)", padding: "8px 14px", cursor: "pointer", transition: "all 0.2s ease" }}
@@ -146,7 +136,6 @@ export default function Reviews() {
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}>
           <div className="relative w-full max-w-md bg-[#0f0f0f] border border-white/[0.08] p-8 sm:p-10">
 
-            {/* Close */}
             <button
               onClick={() => { setShowForm(false); setStatus("idle"); }}
               className="absolute top-5 right-5 text-[#b0aaa3] hover:text-white transition-colors"
@@ -162,7 +151,6 @@ export default function Reviews() {
               Write a Review
             </h3>
 
-            {/* Star rating */}
             <div className="mb-6">
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.5)", marginBottom: "10px" }}>
                 Your Rating
@@ -184,7 +172,6 @@ export default function Reviews() {
               </div>
             </div>
 
-            {/* Name input */}
             <div className="mb-4">
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.5)", marginBottom: "8px" }}>
                 Your Name
@@ -198,7 +185,6 @@ export default function Reviews() {
               />
             </div>
 
-            {/* Review input */}
             <div className="mb-8">
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.5)", marginBottom: "8px" }}>
                 Your Review
@@ -212,7 +198,6 @@ export default function Reviews() {
               />
             </div>
 
-            {/* Submit */}
             {status === "success" ? (
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.7)", textAlign: "center" }}>
                 Thank you for your review.
