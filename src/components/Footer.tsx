@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { supabase } from "../lib/supabase";
+
 const FOOTER_LINKS = [
   { heading: "Contact Hub", links: ["Store Locator", "Contact & Appointments", "Book an Appointment"] },
   { heading: "Customer Care", links: ["Services", "FAQ", "Shipping & Returns", "Gift Wrapping"] },
@@ -16,6 +19,21 @@ const linkStyle = { fontFamily: "Montserrat, sans-serif", fontSize: "10px", line
 const headingStyle = { fontFamily: "Montserrat, sans-serif", fontSize: "8px", fontWeight: 400, letterSpacing: "0.30em", color: "rgba(232,226,217,0.65)", textTransform: "uppercase" as const, marginBottom: "20px" };
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes("@")) return;
+    setStatus("loading");
+    const { error } = await supabase.from("subscribers").insert({ email });
+    if (error) {
+      setStatus(error.code === "23505" ? "success" : "error");
+    } else {
+      setStatus("success");
+      setEmail("");
+    }
+  };
+
   return (
     <footer className="relative z-20 w-full bg-[#0a0a0a] border-t border-white/[0.06]">
 
@@ -30,12 +48,38 @@ export default function Footer() {
         <p style={{ color: "rgba(176,170,163,0.7)", maxWidth: "520px", margin: "0 auto 30px", fontFamily: "Montserrat, sans-serif", fontSize: "13px", lineHeight: "1.8" }}>
           Discover new collections, exclusive releases and timeless inspirations.
         </p>
-        <button className="border border-[#e8e2d9]/30 px-7 sm:px-8 py-3 text-[#e8e2d9] text-xs tracking-[0.2em] uppercase hover:bg-[#e8e2d9] hover:text-[#0a0a0a] transition-all duration-300">
-          Subscribe
-        </button>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
+            placeholder="Your email address"
+            className="bg-transparent border border-white/20 px-5 py-3 text-[#e8e2d9] text-xs tracking-[0.1em] placeholder:text-[#b0aaa3]/40 outline-none focus:border-white/40 transition-colors w-64"
+          />
+          <button
+            onClick={handleSubscribe}
+            disabled={status === "loading"}
+            className="border border-[#e8e2d9]/30 px-7 py-3 text-[#e8e2d9] text-xs tracking-[0.2em] uppercase hover:bg-[#e8e2d9] hover:text-[#0a0a0a] transition-all duration-300 disabled:opacity-50"
+          >
+            {status === "loading" ? "Please wait..." : "Subscribe"}
+          </button>
+        </div>
+
+        {status === "success" && (
+          <p className="mt-4 text-[10px] tracking-[0.2em] uppercase text-[#b0aaa3]/60">
+            Thank you for subscribing.
+          </p>
+        )}
+        {status === "error" && (
+          <p className="mt-4 text-[10px] tracking-[0.2em] uppercase text-red-400/60">
+            Something went wrong. Please try again.
+          </p>
+        )}
       </div>
 
-      {/* Footer Grid — 1 col mobile, 2 col tablet, 4 col desktop */}
+      {/* Footer Grid */}
       <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-12 py-16 sm:py-20 md:py-24 grid grid-cols-2 md:grid-cols-4 gap-10 sm:gap-12">
         {FOOTER_LINKS.map((col) => (
           <div key={col.heading}>
@@ -43,9 +87,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               {col.links.map((link) => (
                 <li key={link}>
-                  <a
-                    href="#"
-                    style={linkStyle}
+                  <a href="#" style={linkStyle}
                     onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(232,226,217,0.9)")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(176,170,163,0.65)")}
                   >
@@ -65,9 +107,7 @@ export default function Footer() {
         </p>
         <div className="flex items-center gap-5">
           {SOCIAL.map(({ icon, label }) => (
-            <button
-              key={label}
-              aria-label={label}
+            <button key={label} aria-label={label}
               style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(176,170,163,0.45)", padding: 0, transition: "color 0.2s ease" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(232,226,217,0.9)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(176,170,163,0.45)")}
@@ -78,11 +118,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Large Brand Mark */}
+      {/* Brand Mark */}
       <div className="border-t border-white/[0.04] py-8 sm:py-10 text-center overflow-hidden">
-        <span
-          style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: "clamp(36px, 8vw, 72px)", fontWeight: 300, letterSpacing: "0.55em", textIndent: "0.55em", color: "rgba(232,226,217,0.10)", textTransform: "uppercase", userSelect: "none" }}
-        >
+        <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: "clamp(36px, 8vw, 72px)", fontWeight: 300, letterSpacing: "0.55em", textIndent: "0.55em", color: "rgba(232,226,217,0.10)", textTransform: "uppercase", userSelect: "none" }}>
           Aubrenne
         </span>
       </div>

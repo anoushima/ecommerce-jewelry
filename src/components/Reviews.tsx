@@ -1,29 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { supabase } from "../lib/supabase";
 
-const REVIEWS = [
-  { id: 1, stars: 5, review: "Absolutely breathtaking. The craftsmanship is unlike anything I have experienced before.", name: "Isabelle R." },
-  { id: 2, stars: 5, review: "My engagement ring arrived perfectly. Simple, refined, and of exceptional quality.", name: "Melissa S." },
-  { id: 3, stars: 5, review: "Beautiful and exactly as described. The packaging alone felt like a luxury experience.", name: "Carolyn M." },
-  { id: 4, stars: 5, review: "Exactly as depicted. The ring is stunning and the service was impeccable throughout.", name: "Scott C." },
-  { id: 5, stars: 5, review: "An heirloom-quality piece. I receive compliments every single time I wear it.", name: "Priya N." },
-  { id: 6, stars: 5, review: "The necklace exceeded every expectation. Aubrenne truly understands luxury.", name: "Sophie L." },
-  { id: 7, stars: 5, review: "Gifted a bracelet to my mother and she was moved to tears. Worth every moment.", name: "Ryan K." },
-  { id: 8, stars: 5, review: "The attention to detail is extraordinary. A truly timeless piece of jewellery.", name: "Amara J." },
+type Review = { id: string; name: string; review: string; stars: number };
+
+const FALLBACK_REVIEWS: Review[] = [
+  { id: "1", stars: 5, review: "Absolutely breathtaking. The craftsmanship is unlike anything I have experienced before.", name: "Isabelle R." },
+  { id: "2", stars: 5, review: "My engagement ring arrived perfectly. Simple, refined, and of exceptional quality.", name: "Melissa S." },
+  { id: "3", stars: 5, review: "Beautiful and exactly as described. The packaging alone felt like a luxury experience.", name: "Carolyn M." },
+  { id: "4", stars: 5, review: "Exactly as depicted. The ring is stunning and the service was impeccable throughout.", name: "Scott C." },
+  { id: "5", stars: 5, review: "An heirloom-quality piece. I receive compliments every single time I wear it.", name: "Priya N." },
+  { id: "6", stars: 5, review: "The necklace exceeded every expectation. Aubrenne truly understands luxury.", name: "Sophie L." },
+  { id: "7", stars: 5, review: "Gifted a bracelet to my mother and she was moved to tears. Worth every moment.", name: "Ryan K." },
+  { id: "8", stars: 5, review: "The attention to detail is extraordinary. A truly timeless piece of jewellery.", name: "Amara J." },
 ];
 
 const VISIBLE = 4;
 
 export default function Reviews() {
+  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
   const [start, setStart] = useState(0);
 
+  useEffect(() => {
+    supabase
+      .from("reviews")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (data && data.length > 0) setReviews(data);
+      });
+  }, []);
+
   const canPrev = start > 0;
-  const canNext = start + VISIBLE < REVIEWS.length;
+  const canNext = start + VISIBLE < reviews.length;
 
   const prev = () => canPrev && setStart((s) => s - 1);
   const next = () => canNext && setStart((s) => s + 1);
 
-  const visible = REVIEWS.slice(start, start + VISIBLE);
+  const visible = reviews.slice(start, start + VISIBLE);
 
   return (
     <section className="relative z-20 w-full bg-[#0a0a0a] py-16 sm:py-20 md:py-24 px-5 sm:px-8 md:px-12 border-t border-white/[0.06]">
@@ -50,11 +64,9 @@ export default function Reviews() {
         </div>
       </div>
 
-      {/* Review cards grid — responsive column count via CSS */}
+      {/* Review cards grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 w-full max-w-7xl mx-auto">
-        {/* Mobile: show 1 | Tablet: show 2 | Desktop: show 4 */}
         {visible.map((r, idx) => {
-          // Hide cards beyond what's shown for each breakpoint using className
           let hiddenClass = "";
           if (idx >= 1) hiddenClass += " hidden sm:flex";
           if (idx >= 2) hiddenClass += " sm:hidden lg:flex";
@@ -81,7 +93,7 @@ export default function Reviews() {
 
       {/* Progress dots */}
       <div className="max-w-7xl mx-auto mt-10 sm:mt-14 flex items-center gap-2">
-        {Array.from({ length: REVIEWS.length - VISIBLE + 1 }).map((_, i) => (
+        {Array.from({ length: reviews.length - VISIBLE + 1 }).map((_, i) => (
           <button
             key={i}
             onClick={() => setStart(i)}
