@@ -30,7 +30,6 @@ export default function Reviews() {
     fetchReviews();
   }, []);
 
-  // Lock body scroll when modal is open
   useEffect(() => {
     if (showForm) {
       document.body.style.overflow = "hidden";
@@ -155,7 +154,7 @@ export default function Reviews() {
           style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}
           onClick={(e) => { if (e.target === e.currentTarget) closeForm(); }}
         >
-          <div className="relative w-full max-w-md bg-[#0f0f0f] border border-white/[0.08] p-8 sm:p-10">
+          <div className="relative w-full max-w-md bg-[#0f0f0f] border border-white/[0.08] p-8 sm:p-10 max-h-[90vh] overflow-y-auto">
 
             <button
               onClick={closeForm}
