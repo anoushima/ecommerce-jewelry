@@ -125,7 +125,6 @@ export default function Navbar() {
 
       {/* ── Mobile/Tablet navbar ── */}
       <nav className="lg:hidden flex items-center justify-between px-5 sm:px-8 py-4 border-b border-white/10 bg-[#0a0a0a]">
-        {/* Brand name center */}
         <span
           style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: "22px", fontWeight: 300, letterSpacing: "0.3em", color: "#e8e2d9", textTransform: "uppercase" }}
         >

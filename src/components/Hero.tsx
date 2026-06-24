@@ -28,7 +28,8 @@ export default function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-[85vh] items-center px-6 sm:px-12 md:px-20">
+      
+<div className="relative z-10 flex min-h-[85vh] items-start sm:items-center px-6 sm:px-12 md:px-20 pt-50 sm:pt-0">
         <div>
           <p
             className="mb-5 uppercase text-[#b0aaa3]"
