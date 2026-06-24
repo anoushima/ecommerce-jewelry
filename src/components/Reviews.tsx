@@ -30,6 +30,18 @@ export default function Reviews() {
     fetchReviews();
   }, []);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showForm]);
+
   const handleSubmit = async () => {
     if (!name.trim() || !review.trim()) return;
     setStatus("loading");
@@ -47,6 +59,11 @@ export default function Reviews() {
         setStatus("idle");
       }, 2000);
     }
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+    setStatus("idle");
   };
 
   const canPrev = start > 0;
@@ -133,11 +150,15 @@ export default function Reviews() {
 
       {/* Review Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}>
+        <div
+          className="fixed inset-0 z-[999] flex items-center justify-center px-4"
+          style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) closeForm(); }}
+        >
           <div className="relative w-full max-w-md bg-[#0f0f0f] border border-white/[0.08] p-8 sm:p-10">
 
             <button
-              onClick={() => { setShowForm(false); setStatus("idle"); }}
+              onClick={closeForm}
               className="absolute top-5 right-5 text-[#b0aaa3] hover:text-white transition-colors"
               style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
@@ -151,6 +172,7 @@ export default function Reviews() {
               Write a Review
             </h3>
 
+            {/* Star rating */}
             <div className="mb-6">
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.5)", marginBottom: "10px" }}>
                 Your Rating
@@ -172,6 +194,7 @@ export default function Reviews() {
               </div>
             </div>
 
+            {/* Name input */}
             <div className="mb-4">
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.5)", marginBottom: "8px" }}>
                 Your Name
@@ -185,6 +208,7 @@ export default function Reviews() {
               />
             </div>
 
+            {/* Review textarea */}
             <div className="mb-8">
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(176,170,163,0.5)", marginBottom: "8px" }}>
                 Your Review
